@@ -15,6 +15,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: ['html2pdf.js'],
+      output: {
+        chunkFileNames: '[name].[hash].js',
+        entryFileNames: '[name].[hash].js',
+        format: 'es',
+      },
     },
   },
 });
