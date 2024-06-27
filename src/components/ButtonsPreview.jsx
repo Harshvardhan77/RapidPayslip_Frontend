@@ -4,7 +4,6 @@ import React from 'react'
 
 function ButtonsPreview({
   setShowPreview,
-  downloadWebpage,
 handleSubmitMain2,
 headerTitle}) {
     const handlePrint =()=>{
@@ -44,9 +43,7 @@ headerTitle}) {
         <button onClick={handlePrint} className="bg-blue-500 py-1 text-white px-6
         rounded shadow font-bold border-2 border-blue-500 m-5 hover:bg-transparent 
          hover:text-blue-500 transition-all duration-300 print-button" >Print</button>
-        <button onClick={(e)=>downloadWebpage(e)} className="bg-blue-500 py-1 text-white px-6
-        rounded shadow font-bold border-2 border-blue-500 m-5 hover:bg-transparent 
-         hover:text-blue-500 transition-all duration-300 print-button" >Download PDF</button>
+
         <button onClick={(e)=>handleSubmitMain2(e)} className="bg-blue-500 py-1 text-white px-6
         rounded shadow font-bold border-2 border-blue-500 m-5 hover:bg-transparent 
          hover:text-blue-500 transition-all duration-300 print-button" >Save {headerTitle}</button>

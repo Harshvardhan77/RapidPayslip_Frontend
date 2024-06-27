@@ -17,12 +17,12 @@ import ButtonsPreview from "./components/ButtonsPreview";
 import NotePreview from "./components/NotePreview";
 import useStateInfo from "./Hooks/useStateInfo";
 import useCityInfo from "./Hooks/useCityInfo"
-import html2pdf from 'html2pdf.js';
 import TitleComponent from "./components/TitleComponent";
 import ButtonDetails from "./components/ButtonDetails";
 import PayslipDetails from "./components/PayslipDetails";
 import EmployeeDetails from "./components/EmployeeDetails";
 import axios from "axios";
+
 
 
 
@@ -178,20 +178,24 @@ function App({}) {
 
 };
 
-function downloadWebpage(e) {
-  e.preventDefault();
-  const payslipElement = document.getElementById('payslip-container');
+// async function downloadWebpage(e){
+//   e.preventDefault();
 
-  if(payslipElement){
-    html2pdf(payslipElement);
-  }
-  else{
-    console.error('Payslip element not found');
-  }
+//   const payslipElement = document.getElementById('payslip-container');
+  
+//   if (payslipElement) {
+//     const canvas = await html2canvas(payslipElement);
+//     const imgData = canvas.toDataURL('image/png');
+//     const pdf = new jsPDF();
+//     pdf.addImage(imgData, 'PNG', 0, 0);
+//     pdf.save('payslip.pdf');
+//   } else {
+//     console.error('Payslip element not found');
+//   }
 
-  handleSubmitMain2(e);
+//   handleSubmitMain2(e);
+// }
 
-}
 
   return (
     
@@ -276,7 +280,6 @@ function downloadWebpage(e) {
    <ButtonsPreview 
     showPreview={showPreview} 
     setShowPreview={setShowPreview}
-    downloadWebpage={downloadWebpage}
     handleSubmitMain2={handleSubmitMain2}
     headerTitle={headerTitle}
     />
@@ -374,7 +377,6 @@ function downloadWebpage(e) {
     setAmountWords={setAmountWords}/>
     <ButtonDetails 
     handleSubmitMain={handleSubmitMain}
-    downloadWebpage={downloadWebpage}
     />
  </div>
   

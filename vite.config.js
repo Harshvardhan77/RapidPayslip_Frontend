@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import React from 'react';
 
 export default defineConfig({
   server: {
@@ -8,17 +8,6 @@ export default defineConfig({
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
-      },
-    },
-  },
-  plugins: [react()],
-  build: {
-    rollupOptions: {
-      external: ['html2pdf.js'],
-      output: {
-        chunkFileNames: '[name].[hash].js',
-        entryFileNames: '[name].[hash].js',
-        format: 'es',
       },
     },
   },
