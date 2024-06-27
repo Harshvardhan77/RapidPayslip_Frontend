@@ -23,7 +23,6 @@ import ButtonDetails from "./components/ButtonDetails";
 import PayslipDetails from "./components/PayslipDetails";
 import EmployeeDetails from "./components/EmployeeDetails";
 import axios from "axios";
-import fs from "fs";
 
 
 
