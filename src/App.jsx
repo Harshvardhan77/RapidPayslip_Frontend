@@ -105,7 +105,7 @@ function App({}) {
     formData.append('note', note);
 
     try {
-      const response= await axios.post('http://localhost:8000/api/v1/users/download',formData,{
+      const response= await axios.post('/download',formData,{
         headers:{
           'Content-Type':'multipart/form-data'
         }
