@@ -105,7 +105,7 @@ function App({}) {
     formData.append('note', note);
 
     try {
-      const response= await axios.post('/api/v1/users/download',formData,{
+      const response= await axios.post('https://rapidpayslipbackend-production.up.railway.app/api/v1/users/download',formData,{
         headers:{
           'Content-Type':'multipart/form-data'
         }
