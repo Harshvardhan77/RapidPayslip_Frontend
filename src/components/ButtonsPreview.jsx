@@ -1,9 +1,8 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
 
 
 function ButtonsPreview({
-  setShowPreview,
 handleSubmitMain2,
 headerTitle}) {
     const handlePrint =()=>{
@@ -34,9 +33,9 @@ headerTitle}) {
     <>
       <section >
         <div className=' m-5 w-full flex justify-center items-center'>
-        <button onClick={()=>setShowPreview(false)} className="bg-blue-500 m-5 py-1 text-white px-6
+        <Link to="/" className="bg-blue-500 m-5 py-1 text-white px-6
         rounded shadow font-bold border-2 border-blue-500 hover:bg-transparent 
-         hover:text-blue-500 transition-all duration-300 print-button" >Check Details</button>
+         hover:text-blue-500 transition-all duration-300 print-button" >Check Details</Link>
         <button onClick={(e)=>downloadWebpage2(e)} className="bg-blue-500 py-1 text-white px-6
         rounded shadow font-bold border-2 border-blue-500 m-5 hover:bg-transparent 
          hover:text-blue-500 transition-all duration-300 print-button" >Download</button>

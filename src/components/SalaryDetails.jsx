@@ -21,7 +21,6 @@ function SalaryDetails({
   setDeductionHeaderAmount,
   setEarningHeaderAmount,
   setEarningHeaderTitle,  
-  netPay,
   netPayTitle,
   setNetPayTitle,
   setNetPay,

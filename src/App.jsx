@@ -1,31 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import './App.css';   
 import './index.css'
-import FooterDetails from "./components/FooterDetails";
-import SalaryDetails from "./components/SalaryDetails";
-import PEDetails from "./components/PEDetails";
-import Header from "./components/Header";
-import HeaderPreview from "./components/HeaderPreview";
-import MonthHeader from "./components/MonthHeader";
-import EmployeePreveiw from "./components/EmployeePreveiw";
-import PayslipPreview from "./components/PayslipPreview";
-import EarningDetailsPreview from "./components/EarningDetailsPreview";
-import DeductionDetailsPreview from "./components/DeductionDetailsPreview";
-import SubTotalPreview from "./components/SubTotalPreview";
-import ButtonsPreview from "./components/ButtonsPreview";
-import NotePreview from "./components/NotePreview";
 import useStateInfo from "./Hooks/useStateInfo";
 import useCityInfo from "./Hooks/useCityInfo"
-import TitleComponent from "./components/TitleComponent";
-import ButtonDetails from "./components/ButtonDetails";
-import PayslipDetails from "./components/PayslipDetails";
-import EmployeeDetails from "./components/EmployeeDetails";
-import axios from "axios";
-
-
-
-
+import Form from "./components/Form/Form";
+import Preview from "./components/Preview/Preview";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 function App({}) {
   const [showPreview,setShowPreview]=useState(false)
@@ -49,7 +30,7 @@ function App({}) {
   const [deductionList,setDeductionList]=useState([])
   const [note,setNote]=useState("")
   const [netPayTitle, setNetPayTitle]= useState("Net Pay")
-  const [netAmount,setNetAmount]=useState("")
+  const [netAmount,setNetAmount]=useState(0)
   const [totalEarningTitle,setTotalEarningTitle]=useState("Total Earning")
   const [totalEarningAmount,setTotalEarningAmount]=useState("")
   const [totalDeductionAmount,setTotalDeductionAmount]=useState("")
@@ -57,340 +38,148 @@ function App({}) {
   const [headerTitle,setHeaderTitle]=useState("")
   const [companyName, setCompanyName]=useState("")
   const [email, setEmail]= useState("")
-  const [subTotal, setSubTotal]= useState("")
+  const [subTotal, setSubTotal]= useState(0)
   const [image,setImage]= useState("")
   const [imagePreview,setimagePreview]=useState("")
   const [amountWords, setAmountWords]=useState("")
-  const [errors,setErrors]= useState({})
   const [selectState, setSelectState]=useState("")
   const [selectCity, setSelectCity]=useState('')
   const stateOptions= useStateInfo('')
   const cityOptions=useCityInfo(selectState)
-  const validationErrors = {};
-  
-  const specialCharactersRegex = /[!@#$%^&*()?`]/;
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const maxLength = 25;
-  const numericRegex = /\d/;
-
-  const validateField = (field, value, errorMessage) => {
-    if (!value.trim()) {
-      validationErrors[field] = 'Required';
-    }
-    else if (specialCharactersRegex.test(value)) {
-      validationErrors[field] = errorMessage || 'Invalid input';
-    } else if (value.length > maxLength) {
-      validationErrors[field] = `${field} is too long`;
-    }
-  };
-
-  const handleSubmitMain2= async(e)=>{
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('headingTitle', headerTitle);
-    formData.append('companyName', companyName);
-    formData.append('email', email);
-    formData.append('month_year', payMonth);
-    formData.append('state', selectState);
-    formData.append('city', selectCity);
-    formData.append('logo', image); 
-    formData.append('payslipDetails', JSON.stringify(payslipList));
-    formData.append('employeeDetails', JSON.stringify(employeeList));
-    formData.append('earningDetails', JSON.stringify(earningList));
-    formData.append('deductionDetails', JSON.stringify(deductionList));
-    formData.append('netPay', netAmount);
-    formData.append('amount', subTotal);
-    formData.append('amountInWords', amountWords);
-    formData.append('note', note);
-
-    try {
-      const response= await axios.post('https://rapidpayslipbackend-production.up.railway.app/api/v1/users/download',formData,{
-        headers:{
-          'Content-Type':'multipart/form-data'
-        }
-      });
-
-      console.log(response.data);
-      alert('Data saved successfully');
-    } catch (error) {
-      console.log("Error while submiting the form",error)
-    }
-  }
-
-  const handleSubmitMain = (e) => {
-  e.preventDefault();
-
-  // headerTitle
-  validateField('headerTitle',headerTitle)
-  if(!headerTitle.trim()){
-    validationErrors.headerTitle='Required'
-  }
-  if (numericRegex.test(headerTitle)) {
-    validationErrors.headerTitle = 'Invalid';
-  }
-  
-  // email
-  if(!email.trim()){
-    validationErrors.email='Required'
-  }else if(!emailRegex.test(email)){
-    validationErrors.email='invalid email'
-  }
-   
-  // select city
-  if(!selectCity.trim()){
-    validationErrors.selectCity='Required'
-  }
-
-  // select state
-  if(!selectState.trim()){
-    validationErrors.selectState='Required'
-  }
-
-  // paymonth
-  if(!payMonth){
-    validationErrors.payMonth='Required'
-  }
-
-  // Company Name
-  validateField('companyName',companyName)
-  if(!companyName.trim()){
-    validationErrors.companyName='Required'
-  }
-  if (numericRegex.test(companyName)) {
-    validationErrors.companyName = 'Invalid';
-  }
-  
-  // image
-  if (!image) {
-    validationErrors.image = 'Required';
-  }
+  const [user,setUser]=useState({});
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
 
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-    
-  }
-  else{
-    setShowPreview(true)
-  }
-
-};
-
-// async function downloadWebpage(e){
-//   e.preventDefault();
-
-//   const payslipElement = document.getElementById('payslip-container');
-  
-//   if (payslipElement) {
-//     const canvas = await html2canvas(payslipElement);
-//     const imgData = canvas.toDataURL('image/png');
-//     const pdf = new jsPDF();
-//     pdf.addImage(imgData, 'PNG', 0, 0);
-//     pdf.save('payslip.pdf');
-//   } else {
-//     console.error('Payslip element not found');
-//   }
-
-//   handleSubmitMain2(e);
-// }
-
-
-  return (
-    
-    <>
-    {showPreview ? <div>
-      <div id="payslip-container" className="print-content">
-    <main className="m-5 p-5 xl:max-w-4xl xl:mx-auto rounded shadow-xl">
-
-      <HeaderPreview 
+  const router= createBrowserRouter([
+    {
+      path:'/',
+      element:<Form
+      user={user}
+      setUser={setUser}
+      headerTitle={headerTitle} 
+      setHeaderTitle={setHeaderTitle} 
       companyName={companyName} 
+      setCompanyName={setCompanyName} 
+      email={email}
+      setEmail={setEmail}
+      image={image}
+      setImage={setImage}
+      setShowPreview={setShowPreview}
+      selectState={selectState}
+      setSelectState={setSelectState}
+      selectCity={selectCity}
+      setSelectCity={setSelectCity}
+      cityOptions={cityOptions}
+      stateOptions={stateOptions}
+      payMonth={payMonth}
+      setPayMonth={setPayMonth}
+      imagePreview={imagePreview}
+      setimagePreview={setimagePreview}
+      setIsSignupModalOpen={setIsSignupModalOpen}
+      isLoginModalOpen={isLoginModalOpen}
+      setIsLoginModalOpen={setIsLoginModalOpen}
+      isSignupModalOpen={isSignupModalOpen}
+  
+      payslipTitle={payslipTitle} 
+      setPayslipTitle={setPayslipTitle} 
+      payslipDate={payslipDate} 
+      setPayslipDate={setPayslipDate}
+      payslipList={payslipList} 
+      setpayslipList={setpayslipList} 
+      empIdTitle={empIdTitle} 
+      setEmpIdTitle={setEmpIdTitle} 
+      employeeList={employeeList} 
+      setEmployeeList={setEmployeeList} 
+      empDetailTitle={empDetailTitle} 
+      setEmpDetailTitle={setEmpDetailTitle}
+      empDetailsAmount={empDetailsAmount} 
+      setEmpDetailsAmount={setEmpDetailsAmount}
+  
+      earningTitle={earningTitle} 
+      setEarningTitle={setEarningTitle} 
+      setEarningAmount={setEarningAmount} 
+      earningAmount={earningAmount} 
+      netPayTitle={netPayTitle}
+      setNetPayTitle={setNetPayTitle}
+      earningList={earningList} 
+      setEarningList={setEarningList}
+      deductionAmount={deductionAmount} 
+      setDeductionAmount={setDeductionAmount} 
+      deductionTitle={deductionTitle} 
+      setDeductionTitle={setDeductionTitle} 
+      deductionList={deductionList} 
+      setDeductionList={setDeductionList}
+      setDeductionHeaderTitle={setDeductionHeaderTitle} 
+      setDeductionHeaderAmount={setDeductionHeaderAmount}
+      earningHeaderAmount={earningHeaderAmount} 
+      setEarningHeaderAmount={setEarningHeaderAmount} 
+      earningHeaderTitle={earningHeaderTitle} 
+      setEarningHeaderTitle={setEarningHeaderTitle} 
+      netAmount={netAmount} 
+      setNetAmount={setNetAmount} 
+      totalEarningTitle={totalEarningTitle} 
+      setTotalEarningTitle={setTotalEarningTitle} 
+      totalDeductionAmount={totalDeductionAmount} 
+      setTotalDeductionAmount={setTotalDeductionAmount}
+      totalEarningAmount={totalEarningAmount} 
+      setTotalEarningAmount={setTotalEarningAmount} 
+      setTotalDeductionTitle={setTotalDeductionTitle}
+      subTotal={subTotal}
+      setSubTotal={setSubTotal}
+      
+      note={note} 
+      setNote={setNote}
+      amountWords={amountWords}
+      setAmountWords={setAmountWords}
+      /> 
+    },{
+      path:'/preview',
+      element:<Preview
+      setIsLoginModalOpen={setIsLoginModalOpen}
+      user={user}
+      companyName={companyName}
       email={email}
       image={image}
       setImage={setImage}
       selectCity={selectCity}
       selectState={selectState}
       imagePreview={imagePreview}
+      headerTitle={headerTitle}
+      payMonth={payMonth}
+      empDetailTitle={empDetailTitle} 
+      empDetailsAmount={empDetailsAmount} 
+      employeeList={employeeList} 
+      setEmployeeList={setEmployeeList}
+      payslipTitle={payslipTitle} 
+      payslipDate={payslipDate} 
+      payslipList={payslipList} 
+      setpayslipList={setpayslipList} 
+      earningHeaderTitle={earningHeaderTitle} 
+      earningHeaderAmount={earningHeaderAmount}
+      earningTitle={earningTitle}
+      earningAmount={earningAmount}
+      earningList={earningList}
+      deductionHeaderTitle={deductionHeaderTitle}
+      deductionHeaderAmount={deductionHeaderAmount}
+      deductionTitle={deductionTitle}
+      deductionAmount={deductionAmount}
+      deductionList={deductionList}
+      subTotal={subTotal} 
+      setSubTotal={setSubTotal}
+      netPayTitle={netPayTitle}
+      totalEarningAmount={totalEarningAmount}
+      totalDeductionAmount={totalDeductionAmount}
+      note={note}
+      setNote={setNote}
       />
-    
-
+    }
+  ])
   
-    <MonthHeader 
-    headerTitle={headerTitle}
-     payMonth={payMonth}/>
-
-    {/* Employee and paylsip details started */}
-    <section className={`flex flex-row min-h-0 rounded mb-2 payslip-color-2 ${
-    (!empDetailTitle.trim() || !payslipTitle.trim()) ? 'border-2 border-black' : ''
-  }`}
->
-    <EmployeePreveiw 
-    empDetailTitle={empDetailTitle} 
-    empDetailsAmount={empDetailsAmount} 
-    employeeList={employeeList} 
-    setEmployeeList={setEmployeeList}/>
-    <PayslipPreview 
-    payslipTitle={payslipTitle} 
-    payslipDate={payslipDate} 
-    payslipList={payslipList} 
-    setpayslipList={setpayslipList} />
-    </section>
-    
-    {/* Employee and payslip details ended */}
-    
-    {/* Earning and deduction details started */}
-    <section className='flex flex-row  h-auto border-black border-2 rounded payslip-color-2'>
-        <EarningDetailsPreview 
-        earningHeaderTitle={earningHeaderTitle} 
-        earningHeaderAmount={earningHeaderAmount}
-        earningTitle={earningTitle}
-        earningAmount={earningAmount}
-        earningList={earningList}/>
-        
-        <DeductionDetailsPreview
-        deductionHeaderTitle={deductionHeaderTitle}
-        deductionHeaderAmount={deductionHeaderAmount}
-        deductionTitle={deductionTitle}
-        deductionAmount={deductionAmount}
-        deductionList={deductionList}
-        />
-    </section>
-
-    {/* Earning and deduction details ended */}
-
-    <SubTotalPreview 
-    subTotal={subTotal} 
-    setSubTotal={setSubTotal}
-    netPayTitle={netPayTitle}
-    totalEarningAmount={totalEarningAmount}
-    totalDeductionAmount={totalDeductionAmount}/>
-
-  
-{note.trim() ? (
-  <NotePreview
-    note={note}
-    setNote={setNote}
-  />
-) : null}
-
-  
-   </main> 
-   </div>
-   <ButtonsPreview 
-    showPreview={showPreview} 
-    setShowPreview={setShowPreview}
-    handleSubmitMain2={handleSubmitMain2}
-    headerTitle={headerTitle}
-    />
-
-      </div>:(
-        <>
-        <form onSubmit={(e) => handleSubmitMain(e)} encType="multipart/form-data">
-  <div className="flex input_class justify-center items-center col-span-4 mr-5">
-
-    <div className="w-4/5">
-
-    <TitleComponent/>
-    <div className="bg_4">
-    <Header 
-    headerTitle={headerTitle} 
-    setHeaderTitle={setHeaderTitle} 
-    companyName={companyName} 
-    setCompanyName={setCompanyName} 
-    email={email}
-    setEmail={setEmail}
-    image={image}
-    setImage={setImage}
-    errors={errors}
-    setErrors={setErrors}
-    handleSubmitMain={handleSubmitMain}
-    setShowPreview={setShowPreview}
-    selectState={selectState}
-    setSelectState={setSelectState}
-    selectCity={selectCity}
-    setSelectCity={setSelectCity}
-    cityOptions={cityOptions}
-    stateOptions={stateOptions}
-    payMonth={payMonth}
-    setPayMonth={setPayMonth}
-    validationErrors={validationErrors}
-    validateField={validateField}
-    imagePreview={imagePreview}
-    setimagePreview={setimagePreview}
-    />
-
-
-     <PEDetails  
-     payMonth={payMonth}
-     setPayMonth={setPayMonth}
-    payslipTitle={payslipTitle} 
-    setPayslipTitle={setPayslipTitle} 
-    payslipDate={payslipDate} 
-    setPayslipDate={setPayslipDate}
-    payslipList={payslipList} 
-    setpayslipList={setpayslipList} 
-    empIdTitle={empIdTitle} 
-    setEmpIdTitle={setEmpIdTitle} 
-    employeeList={employeeList} 
-    setEmployeeList={setEmployeeList} 
-    empDetailTitle={empDetailTitle} 
-    setEmpDetailTitle={setEmpDetailTitle}
-    empDetailsAmount={empDetailsAmount} 
-    setEmpDetailsAmount={setEmpDetailsAmount}
-  /> 
-
-    <SalaryDetails earningTitle={earningTitle} 
-    setEarningTitle={setEarningTitle} 
-    setEarningAmount={setEarningAmount} 
-    earningAmount={earningAmount} 
-    netPayTitle={netPayTitle}
-    setNetPayTitle={setNetPayTitle}
-    earningList={earningList} 
-    setEarningList={setEarningList}
-    deductionAmount={deductionAmount} 
-    setDeductionAmount={setDeductionAmount} 
-    deductionTitle={deductionTitle} 
-    setDeductionTitle={setDeductionTitle} 
-    deductionList={deductionList} 
-    setDeductionList={setDeductionList}
-    setDeductionHeaderTitle={setDeductionHeaderTitle} 
-    setDeductionHeaderAmount={setDeductionHeaderAmount}
-    earningHeaderAmount={earningHeaderAmount} 
-    setEarningHeaderAmount={setEarningHeaderAmount} 
-    earningHeaderTitle={earningHeaderTitle} 
-    setEarningHeaderTitle={setEarningHeaderTitle} 
-    netAmount={netAmount} setNetAmount={setNetAmount} 
-    totalEarningTitle={totalEarningTitle} 
-    setTotalEarningTitle={setTotalEarningTitle} 
-    totalDeductionAmount={totalDeductionAmount} 
-    setTotalDeductionAmount={setTotalDeductionAmount}
-    totalEarningAmount={totalEarningAmount} 
-    setTotalEarningAmount={setTotalEarningAmount} 
-    setTotalDeductionTitle={setTotalDeductionTitle}
-    subTotal={subTotal}
-    setSubTotal={setSubTotal}/> 
-    <FooterDetails note={note} 
-    setNote={setNote}
-    subTotal={subTotal}
-    amountWords={amountWords}
-    setAmountWords={setAmountWords}/>
-    <ButtonDetails 
-    handleSubmitMain={handleSubmitMain}
-    />
- </div>
-  
-    </div>
-    </div>
-    
-    </form>
-  
+  return (
+    <>
+    <RouterProvider router={router}/>
     </>
-        )}
-
-  
-    </>
-
   );
 }
 
