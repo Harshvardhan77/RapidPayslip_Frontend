@@ -6,6 +6,8 @@ import SalaryDetails from '../SalaryDetails';
 import FooterDetails from '../FooterDetails';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { memo } from 'react';
+import Sidebar from './Sidebar';
 
 function Form({
     headerTitle,
@@ -81,7 +83,8 @@ function Form({
     isLoginModalOpen,
     setIsLoginModalOpen,
     isSignupModalOpen,
-    setIsSignupModalOpen
+    setIsSignupModalOpen,
+    payslipsUrls
 }) {
 
     const [errors,setErrors]= useState({})
@@ -165,10 +168,17 @@ function Form({
       
       };
 
+      const containerClass = Object.keys(user).length>0
+    ? 'flex input_class justify-start items-start mr-5 ml-2'
+    : 'flex input_class justify-center items-center col-span-4 mr-5';
+
+      const containerClass2=Object.keys(user).length>0
+      ? 'w-full':'w-4/5';
+
   return (
     <>
-    <div className='flex input_class justify-center items-center col-span-4 mr-5'>
-    <div className='w-4/5'>
+    <div className={containerClass}>
+    <div className={containerClass2}>
     <TitleComponent
     user={user}
     setUser={setUser}
@@ -179,8 +189,7 @@ function Form({
     </div>
     </div>
 <form onSubmit={(e) => handleSubmitMain(e)} encType="multipart/form-data">
-  <div className="flex input_class justify-center items-center col-span-4 mr-5">
-
+  <div className={containerClass}>
     <div className="w-4/5">
 
     <div className="bg_4">
@@ -287,6 +296,7 @@ function Form({
   
     </div>
     </div>
+    {Object.keys(user).length>0 ?  <Sidebar user={user}/> : null}
     </div>
 
     </form>
@@ -294,4 +304,4 @@ function Form({
   )
 }
 
-export default Form
+export default memo(Form)

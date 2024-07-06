@@ -1,6 +1,7 @@
 import React from 'react'
 import FooterAmount from './FooterAmount'
 import FooterText from './FooterText'
+import { memo } from 'react'
 
 function FooterDetails({note,setNote,subTotal,amountWords, setAmountWords}) {
   return (
@@ -19,4 +20,4 @@ function FooterDetails({note,setNote,subTotal,amountWords, setAmountWords}) {
   )
 }
 
-export default FooterDetails
+export default memo(FooterDetails)

@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function MonthHeader({
   headerTitle,
@@ -16,4 +17,4 @@ function MonthHeader({
   )
 }
 
-export default MonthHeader
+export default memo(MonthHeader)

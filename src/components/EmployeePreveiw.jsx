@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function EmployeePreveiw({
   empDetailTitle,
@@ -31,4 +32,4 @@ function EmployeePreveiw({
   )
 }
 
-export default EmployeePreveiw
+export default memo(EmployeePreveiw)

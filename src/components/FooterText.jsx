@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function FooterText({note,setNote}) {
   return (
@@ -26,4 +27,4 @@ function FooterText({note,setNote}) {
   )
 }
 
-export default FooterText
+export default memo(FooterText)

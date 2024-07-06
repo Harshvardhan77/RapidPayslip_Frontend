@@ -1,5 +1,6 @@
 import { useState } from "react"
 import React from 'react'
+import { memo } from "react";
 
 function NetPay({subTotal,netPayTitle,setNetPayTitle}) {
   const[errors,setErrors]=useState({})
@@ -53,4 +54,4 @@ function NetPay({subTotal,netPayTitle,setNetPayTitle}) {
   )
 }
 
-export default NetPay
+export default memo(NetPay)

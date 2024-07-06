@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
      '/api/v1/users': {
-        target: 'http://localhost:8000',
+        target: 'https://rapidpayslipbackend-production.up.railway.app',
         changeOrigin: true,
         secure: false,
       },

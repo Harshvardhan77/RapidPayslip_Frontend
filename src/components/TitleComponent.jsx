@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import "../App.css";
 import { useEffect } from "react";
+import { memo } from "react";
 
 function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,isSignupModalOpen,setIsSignupModalOpen}) {
 
@@ -31,13 +32,6 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
     setIsLoginModalOpen(true);
   };
 
-  // Fetching user
-  useEffect(()=>{
-    if(localStorage.getItem('user')){
-    setUser(JSON.parse(localStorage.getItem('user')))
-    }
-  }
-,[user,setUser])
 
   // Signup validation Schema
   const SignupSchema = Yup.object().shape({
@@ -128,12 +122,12 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
     >
       <div className="flex justify-between items-center mb-2 mt-5 font-serif px-5">
         <h1 className={`font-bold text-4xl text-center flex-grow ml-60 ${Object.keys(user).length <= 0 ? 'mr-10' : ''}`}>
-          Payslip Generator
+          Rapid Payslip
         </h1>
         <div className="ml-auto">
           <div className="flex justify-center items-center">
             {Object.keys(user).length>0 ? (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-end items-end">
               <div className="text-black text-xl border-2 p-2">{`Welcome ${user.FullName.split(" ")[0]}`}</div>
               <button onClick={logout} className="ml-4 border-2 p-2">Logout</button>
               </div>
@@ -410,7 +404,7 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
                           <Field
                             type="password"
                             name="confirm"
-                            id="passwordSignup"
+                            id="confirm"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="••••••••"
                           />
@@ -448,4 +442,4 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
   );
 }
 
-export default TitleComponent;
+export default memo(TitleComponent);

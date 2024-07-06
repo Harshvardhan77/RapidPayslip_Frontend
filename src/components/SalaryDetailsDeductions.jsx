@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useState } from "react";
+import { memo } from "react";
 
 function SalaryDetailsDeductions({
   deductionTitle,
@@ -287,4 +288,4 @@ function SalaryDetailsDeductions({
   );
 }
 
-export default SalaryDetailsDeductions;
+export default memo(SalaryDetailsDeductions);

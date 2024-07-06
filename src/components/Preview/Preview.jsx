@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import HeaderPreview from "../HeaderPreview";
 import MonthHeader from "../MonthHeader";
@@ -11,6 +11,8 @@ import ButtonsPreview from "../ButtonsPreview";
 import NotePreview from "../NotePreview";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import html2pdf from "html2pdf.js";
+import { memo } from "react";
 
 function Preview({
   payMonth,
@@ -50,16 +52,29 @@ function Preview({
   setNote,
   headerTitle,
   amountWords,
-  setIsLoginModalOpen
+  setIsLoginModalOpen,
 }) {
-  const navigate=useNavigate();
-  
+  const navigate = useNavigate()
+
   const handleSubmitMain2 = async (e) => {
     e.preventDefault();
-    if (Object.keys(user).length<=0) {
-      setIsLoginModalOpen(true)
-      navigate("/")
+    if (Object.keys(user).length <= 0) {
+      setIsLoginModalOpen(true);
+      navigate("/");
     } else {
+      const pdfBlob = await downloadWebpage2(e);
+      const pdfFile = new File([pdfBlob], `${headerTitle}.pdf`, {
+        type: "application/pdf",
+      });
+
+      // Download on the client side
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(pdfBlob);
+      link.download = `${headerTitle}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
       const formData = new FormData();
       formData.append("headingTitle", headerTitle);
       formData.append("companyName", companyName);
@@ -73,10 +88,10 @@ function Preview({
       formData.append("earningDetails", JSON.stringify(earningList));
       formData.append("deductionDetails", JSON.stringify(deductionList));
       formData.append("netPay", subTotal);
-      console.log(typeof subTotal);
       formData.append("amountInWords", amountWords);
       formData.append("note", note);
-      formData.append("userId",user._id)
+      formData.append("userId", user._id);
+      formData.append("payslip", pdfFile);
 
       try {
         const response = await axios.post("/api/v1/users/download", formData, {
@@ -86,12 +101,63 @@ function Preview({
         });
 
         console.log(response.data);
-        alert("Data saved successfully");
       } catch (error) {
         console.log("Error while submiting the form", error);
       }
     }
   };
+  async function downloadWebpage2(e) {
+
+    if(Object.keys(user).length<0){
+      setIsLoginModalOpen(true)
+      navigate("/")
+    }
+    else{
+      const clonedDocument = document.documentElement.cloneNode(true);
+
+    
+    const buttons = clonedDocument.querySelectorAll("button");
+    buttons.forEach((button) => button.remove());
+
+    
+    const contentDiv = document.createElement("div");
+    contentDiv.appendChild(clonedDocument);
+
+    const styleElement = document.createElement("style");
+    styleElement.textContent = `
+      body, html {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        padding: 20px;
+        margin: 20px;
+      }
+    `;
+    contentDiv.appendChild(styleElement);
+
+    
+    const pdfBlob=await html2pdf().from(contentDiv).outputPdf('blob')
+    return pdfBlob;
+    // html2pdf()
+    //   .from(contentDiv)
+    //   .set({
+    //     margin: [10, 10, 10, 10], 
+    //     filename: `${headerTitle}.pdf`,
+    //     html2canvas: {
+    //       scale: 2, 
+    //       useCORS: true, 
+    //     },
+    //     jsPDF: {
+    //       orientation: "portrait",
+    //       unit: "mm", 
+    //       format: "a4", 
+    //     },
+    //   })
+    //   .save();
+    }
+  }
+
 
   return (
     <div>
@@ -166,6 +232,9 @@ function Preview({
           <ButtonsPreview
             handleSubmitMain2={handleSubmitMain2}
             headerTitle={headerTitle}
+            user={user}
+            setIsLoginModalOpen={setIsLoginModalOpen}
+            downloadWebpage2={downloadWebpage2}
           />
         </main>
       </div>
@@ -173,4 +242,4 @@ function Preview({
   );
 }
 
-export default Preview;
+export default memo(Preview);

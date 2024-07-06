@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react';
 
 
 
@@ -102,7 +103,7 @@ function Header({
 return (
     <>
     <div className='w-full'>
-    <div className='h-12 bg_2 flex justify-center items-center mt-1'>
+    <div className='h-12 bg_2 flex justify-center items-center'>
             <h2 className='font-bold text-3xl main_text'>Header Details</h2>
         </div> 
     <div className=' backdrop-blur-sm flex items-center justify-center bg_1 main_text pl-4 pr-4'>
@@ -238,4 +239,4 @@ return (
   )
 }
 
-export default Header
+export default memo(Header)

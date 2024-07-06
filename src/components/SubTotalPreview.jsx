@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function SubTotalPreview({subTotal,netPayTitle}) {
   
@@ -24,4 +25,4 @@ function SubTotalPreview({subTotal,netPayTitle}) {
   )
 }
 
-export default SubTotalPreview
+export default memo(SubTotalPreview)

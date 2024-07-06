@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import {AiOutlineDelete} from 'react-icons/ai'
 import { useState } from 'react';
+import { memo } from 'react';
+
 function SalaryDetailsEarning({ 
   earningTitle,
   setEarningTitle,
@@ -262,4 +264,4 @@ function SalaryDetailsEarning({
   )
 }
 
-export default SalaryDetailsEarning
+export default memo(SalaryDetailsEarning)

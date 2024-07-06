@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function DeductionDetailsPreview({
   deductionHeaderTitle,
@@ -45,4 +46,4 @@ function DeductionDetailsPreview({
   )
 }
 
-export default DeductionDetailsPreview
+export default memo(DeductionDetailsPreview)

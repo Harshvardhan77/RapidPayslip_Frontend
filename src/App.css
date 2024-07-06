@@ -68,6 +68,10 @@ select.input-error{
   background-color: white;
 }
 
+.sidebar{
+  max-height: 1635px;
+}
+
 @media print{
   .print-button{
     display: none;

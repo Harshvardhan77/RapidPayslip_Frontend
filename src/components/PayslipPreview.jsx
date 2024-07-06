@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function PayslipPreview({
   payslipTitle,
@@ -33,4 +34,4 @@ function PayslipPreview({
   )
 }
 
-export default PayslipPreview
+export default memo(PayslipPreview)

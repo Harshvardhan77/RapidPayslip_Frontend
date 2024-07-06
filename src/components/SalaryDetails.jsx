@@ -3,6 +3,7 @@ import SalaryDetailsDeductions from './SalaryDetailsDeductions';
 import SalaryDetailsEarning from './SalaryDetailsEarning';
 import NetPay from './NetPay';
 import { useEffect } from 'react';
+import { memo } from 'react';
 
 function SalaryDetails({ 
   earningTitle,
@@ -89,4 +90,4 @@ setSubTotal}) {
   );
 }
 
-export default SalaryDetails;
+export default memo(SalaryDetails);

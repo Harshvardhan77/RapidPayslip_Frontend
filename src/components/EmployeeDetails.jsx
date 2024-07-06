@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import {AiOutlineDelete} from "react-icons/ai";
 import { useState } from 'react';
+import { memo } from 'react';
 
 
 
@@ -173,7 +174,7 @@ function EmployeeDetails({
   )
 }
 
-export default EmployeeDetails
+export default memo(EmployeeDetails)
 
 
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function NotePreview({
   note,
@@ -15,4 +16,4 @@ function NotePreview({
   )
 }
 
-export default NotePreview
+export default memo(NotePreview)

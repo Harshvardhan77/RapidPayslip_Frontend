@@ -1,6 +1,7 @@
 import React from 'react'
 import PayslipDetails from './PayslipDetails'
 import EmployeeDetails from './EmployeeDetails'
+import { memo } from 'react'
 
 
 function PEDetails({
@@ -59,4 +60,4 @@ Payslip & Employee Details
   )
 }
 
-export default PEDetails
+export default memo(PEDetails)

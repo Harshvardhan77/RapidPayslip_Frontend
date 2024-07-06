@@ -1,5 +1,6 @@
 import numberToWords from 'number-to-words';
 import React, { useEffect } from 'react'
+import { memo } from 'react';
 
 function FooterAmount({subTotal,amountWords,setAmountWords}) {
   useEffect(() => {
@@ -46,4 +47,4 @@ function FooterAmount({subTotal,amountWords,setAmountWords}) {
   )
 }
 
-export default FooterAmount
+export default memo(FooterAmount)

@@ -1,6 +1,7 @@
   import React, { useState } from 'react'
   import { v4 as uuidv4 } from 'uuid';
   import {AiOutlineDelete} from 'react-icons/ai'
+  import { memo } from 'react';
   
 
  
@@ -178,5 +179,5 @@
     )
   }
 
-  export default PayslipDetails
+  export default memo(PayslipDetails)
 

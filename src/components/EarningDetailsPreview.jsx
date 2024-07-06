@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function EarningDetailsPreview({
   earningHeaderTitle,
@@ -43,4 +44,4 @@ function EarningDetailsPreview({
   )
 }
 
-export default EarningDetailsPreview
+export default memo(EarningDetailsPreview)

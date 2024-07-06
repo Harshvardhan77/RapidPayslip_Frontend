@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 function HeaderPreview({
     companyName,
@@ -35,4 +36,4 @@ function HeaderPreview({
   )
 }
 
-export default HeaderPreview
+export default memo(HeaderPreview)

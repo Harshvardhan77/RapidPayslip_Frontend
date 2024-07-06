@@ -7,6 +7,8 @@ import useCityInfo from "./Hooks/useCityInfo"
 import Form from "./components/Form/Form";
 import Preview from "./components/Preview/Preview";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import axios from "axios"
+import PreviousPayslips from "./components/Payslips/PreviousPayslips";
 
 function App({}) {
   const [showPreview,setShowPreview]=useState(false)
@@ -48,7 +50,19 @@ function App({}) {
   const cityOptions=useCityInfo(selectState)
   const [user,setUser]=useState({});
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);  
+
+  // Fetching user
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Error parsing user data from local storage:', error);
+      }
+    }
+  }, []);
 
 
   const router= createBrowserRouter([
