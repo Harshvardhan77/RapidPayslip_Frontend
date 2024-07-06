@@ -12,7 +12,7 @@ const Sidebar = ({ user }) => {
       try {
         const response = await axios.get(`https://rapidpayslipbackend-production.up.railway.app/api/v1/users/payslips/${user._id}`);
         console.log(response.data.data);
-        setPayslipUrls(response.data.data);
+        setPayslipUrls(response.data.data.map(url => url.replace('http://', 'https://')));
       } catch (error) {
         console.log("Error while fetching the payslip Url", error);
       }
