@@ -67,7 +67,7 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
     formdata.append("password", values.passwordLogin);
 
     try {
-      const response = await axios.post("/api/v1/users/login", formdata, {
+      const response = await axios.post("https://rapidpayslipbackend-production.up.railway.app/api/v1/users/login", formdata, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -94,7 +94,7 @@ function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,is
     formdata.append("password", values.passwordSignup);
 
     try {
-      const response = await axios.post("/api/v1/users/register", formdata, {
+      const response = await axios.post("https://rapidpayslipbackend-production.up.railway.app/api/v1/users/register", formdata, {
         headers: {
           "Content-Type": "application/json",
         },

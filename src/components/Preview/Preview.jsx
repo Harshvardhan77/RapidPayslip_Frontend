@@ -54,7 +54,7 @@ function Preview({
   amountWords,
   setIsLoginModalOpen,
 }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmitMain2 = async (e) => {
     e.preventDefault();
@@ -94,11 +94,15 @@ function Preview({
       formData.append("payslip", pdfFile);
 
       try {
-        const response = await axios.post("/api/v1/users/download", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.post(
+          "https://rapidpayslipbackend-production.up.railway.app/api/v1/users/download",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
         console.log(response.data);
       } catch (error) {
@@ -107,24 +111,20 @@ function Preview({
     }
   };
   async function downloadWebpage2(e) {
-
-    if(Object.keys(user).length<0){
-      setIsLoginModalOpen(true)
-      navigate("/")
-    }
-    else{
+    if (Object.keys(user).length < 0) {
+      setIsLoginModalOpen(true);
+      navigate("/");
+    } else {
       const clonedDocument = document.documentElement.cloneNode(true);
 
-    
-    const buttons = clonedDocument.querySelectorAll("button");
-    buttons.forEach((button) => button.remove());
+      const buttons = clonedDocument.querySelectorAll("button");
+      buttons.forEach((button) => button.remove());
 
-    
-    const contentDiv = document.createElement("div");
-    contentDiv.appendChild(clonedDocument);
+      const contentDiv = document.createElement("div");
+      contentDiv.appendChild(clonedDocument);
 
-    const styleElement = document.createElement("style");
-    styleElement.textContent = `
+      const styleElement = document.createElement("style");
+      styleElement.textContent = `
       body, html {
         margin: 0;
         padding: 0;
@@ -134,30 +134,28 @@ function Preview({
         margin: 20px;
       }
     `;
-    contentDiv.appendChild(styleElement);
+      contentDiv.appendChild(styleElement);
 
-    
-    const pdfBlob=await html2pdf().from(contentDiv).outputPdf('blob')
-    return pdfBlob;
-    // html2pdf()
-    //   .from(contentDiv)
-    //   .set({
-    //     margin: [10, 10, 10, 10], 
-    //     filename: `${headerTitle}.pdf`,
-    //     html2canvas: {
-    //       scale: 2, 
-    //       useCORS: true, 
-    //     },
-    //     jsPDF: {
-    //       orientation: "portrait",
-    //       unit: "mm", 
-    //       format: "a4", 
-    //     },
-    //   })
-    //   .save();
+      const pdfBlob = await html2pdf().from(contentDiv).outputPdf("blob");
+      return pdfBlob;
+      // html2pdf()
+      //   .from(contentDiv)
+      //   .set({
+      //     margin: [10, 10, 10, 10],
+      //     filename: `${headerTitle}.pdf`,
+      //     html2canvas: {
+      //       scale: 2,
+      //       useCORS: true,
+      //     },
+      //     jsPDF: {
+      //       orientation: "portrait",
+      //       unit: "mm",
+      //       format: "a4",
+      //     },
+      //   })
+      //   .save();
     }
   }
-
 
   return (
     <div>
