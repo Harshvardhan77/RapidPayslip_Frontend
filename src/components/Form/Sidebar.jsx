@@ -10,7 +10,7 @@ const Sidebar = ({ user }) => {
   useEffect(() => {
     const fetchPayslips = async () => {
       try {
-        const response = await axios.get(`/api/v1/users/payslips/${user._id}`);
+        const response = await axios.get(`https://rapidpayslipbackend-production.up.railway.app/api/v1/users/payslips/${user._id}`);
         console.log(response.data.data);
         setPayslipUrls(response.data.data);
       } catch (error) {
