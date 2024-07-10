@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { FooterContext } from '../../contexts/FooterContext'
 
-function NotePreview({
-  note,
-  setNote
-}) {
+function NotePreview() {
+  const { note,setNote}= useContext(FooterContext)
   return (
     <>
     <section className='flex justify-left'>

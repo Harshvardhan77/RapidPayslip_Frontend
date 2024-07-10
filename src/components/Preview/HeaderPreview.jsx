@@ -1,18 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { HeaderContext } from '../../contexts/HeaderContext'
 
-function HeaderPreview({
-    companyName,
-
-    email,
-    image,
-    setImage,
-    selectState,
-    selectCity,
-    imagePreview
-}) {
+function HeaderPreview() {
+    const { companyName,email,image,setImage,selectState,selectCity,imagePreview}= useContext(HeaderContext)
    return (
-
     <>
     <main>
         {/* Header details */}

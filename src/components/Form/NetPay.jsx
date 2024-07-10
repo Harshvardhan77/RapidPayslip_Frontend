@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import React from 'react'
 import { memo } from "react";
+import { SalaryContext } from "../../contexts/SalaryContext";
 
-function NetPay({subTotal,netPayTitle,setNetPayTitle}) {
+function NetPay() {
+  const {subTotal,netPayTitle,setNetPayTitle}= useContext(SalaryContext)
   const[errors,setErrors]=useState({})
   
   // handleEmpIdKeyDown Function

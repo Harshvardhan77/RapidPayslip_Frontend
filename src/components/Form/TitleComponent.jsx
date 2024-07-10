@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "../App.css";
-import { useEffect } from "react";
+import "../../App.css"
 import { memo } from "react";
+import { HeaderContext } from "../../contexts/HeaderContext";
 
-function TitleComponent({ user, setUser,isLoginModalOpen, setIsLoginModalOpen,isSignupModalOpen,setIsSignupModalOpen}) {
+function TitleComponent() {
+
+  const { user, setUser,isLoginModalOpen, setIsLoginModalOpen,isSignupModalOpen,setIsSignupModalOpen}= useContext(HeaderContext);
 
   const toggleModalLogin = () => {
     setIsLoginModalOpen(!isLoginModalOpen);

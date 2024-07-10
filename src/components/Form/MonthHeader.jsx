@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { HeaderContext } from '../../contexts/HeaderContext'
 
-function MonthHeader({
-  headerTitle,
-  payMonth
-}) {
+function MonthHeader() {
+  const { headerTitle,payMonth}= useContext(HeaderContext)
   return (
     <div>
        <section>

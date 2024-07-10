@@ -1,24 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import {AiOutlineDelete} from 'react-icons/ai'
 import { useState } from 'react';
 import { memo } from 'react';
+import { SalaryContext } from '../../contexts/SalaryContext';
 
-function SalaryDetailsEarning({ 
-  earningTitle,
-  setEarningTitle,
-  setEarningAmount,
-  earningAmount,
-  earningList,
-  setEarningList,
-  earningHeaderTitle,
-  setEarningHeaderAmount,
-  setEarningHeaderTitle,
-  setTotalEarningTitle,
-  totalEarningAmount,
-
-  setTotalEarningAmount}) {
+function SalaryDetailsEarning() {
+  const { earningTitle,setEarningTitle,setEarningAmount,earningAmount,earningList,setEarningList,earningHeaderTitle,setEarningHeaderAmount,
+    setEarningHeaderTitle,setTotalEarningTitle,totalEarningAmount,setTotalEarningAmount}= useContext(SalaryContext)
 
     const[errors,setErrors]=useState({})
 

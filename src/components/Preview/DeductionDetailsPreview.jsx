@@ -1,14 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { SalaryContext } from '../../contexts/SalaryContext'
 
-function DeductionDetailsPreview({
-  deductionHeaderTitle,
-        deductionHeaderAmount,
-        deductionTitle,
-        deductionAmount,
-        deductionList,
-
-}) {
+function DeductionDetailsPreview() {
+  const { deductionHeaderTitle, deductionHeaderAmount,deductionTitle,deductionAmount,deductionList}= useContext(SalaryContext)
+  
   return (
     <>
     

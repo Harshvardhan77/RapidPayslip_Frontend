@@ -1,59 +1,38 @@
-import React, { useEffect } from "react";
-
-import HeaderPreview from "../HeaderPreview";
-import MonthHeader from "../MonthHeader";
-import EmployeePreveiw from "../EmployeePreveiw";
-import PayslipPreview from "../PayslipPreview";
-import EarningDetailsPreview from "../EarningDetailsPreview";
-import DeductionDetailsPreview from "../DeductionDetailsPreview";
-import SubTotalPreview from "../SubTotalPreview";
-import ButtonsPreview from "../ButtonsPreview";
-import NotePreview from "../NotePreview";
+import React, { useContext, useEffect } from "react";
+import HeaderPreview from "../components/Preview/HeaderPreview.jsx";
+import MonthHeader from "../components/Form/MonthHeader.jsx";
+import PayslipPreview from "../components/Preview/PayslipPreview.jsx";
+import EarningDetailsPreview from "../components/Preview/EarningDetailsPreview.jsx";
+import DeductionDetailsPreview from "../components/Preview/DeductionDetailsPreview.jsx";
+import SubTotalPreview from "../components/Preview/SubTotalPreview.jsx";
+import ButtonsPreview from "../components/Preview/ButtonsPreview.jsx";
+import NotePreview from "../components/Preview/NotePreview.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { memo } from "react";
+import { HeaderContext } from "../contexts/HeaderContext.jsx";
+import { EmployeeContext } from "../contexts/EmployeeContext.jsx";
+import { SalaryContext } from "../contexts/SalaryContext.jsx";
+import { FooterContext } from "../contexts/FooterContext.jsx";
+import EmployeePreveiw from "../components/Preview/EmployeePreveiw.jsx";
 
-function Preview({
-  payMonth,
-  companyName,
-  email,
-  image,
-  setImage,
-  selectCity,
-  selectState,
-  imagePreview,
-  empDetailTitle,
-  empDetailsAmount,
-  employeeList,
-  setEmployeeList,
-  payslipTitle,
-  payslipDate,
-  payslipList,
-  setpayslipList,
-  earningHeaderTitle,
-  earningHeaderAmount,
-  earningTitle,
-  earningAmount,
-  earningList,
-  deductionHeaderTitle,
-  deductionHeaderAmount,
-  deductionTitle,
-  deductionAmount,
-  deductionList,
-  subTotal,
-  setSubTotal,
-  netPayTitle,
-  totalEarningAmount,
-  totalDeductionAmount,
-  note,
-  netAmount,
-  user,
-  setNote,
-  headerTitle,
-  amountWords,
-  setIsLoginModalOpen,
-}) {
+function Preview() {
+  const {
+    user,
+    setIsLoginModalOpen,
+    headerTitle,
+    companyName,
+    email,
+    payMonth,
+    selectState,
+    selectCity,
+    image,
+  } = useContext(HeaderContext);
+  const { payslipList, employeeList,empDetailTitle,payslipTitle } = useContext(EmployeeContext);
+  const { earningList, deductionList } = useContext(SalaryContext);
+  const { subTotal, amountWords, note } = useContext(FooterContext);
+
   const navigate = useNavigate();
 
   const handleSubmitMain2 = async (e) => {
@@ -94,15 +73,11 @@ function Preview({
       formData.append("payslip", pdfFile);
 
       try {
-        const response = await axios.post(
-          "https://rapidpayslipbackend-production.up.railway.app/api/v1/users/download",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        const response = await axios.post("/api/v1/users/download", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
         console.log(response.data);
       } catch (error) {
@@ -161,17 +136,9 @@ function Preview({
     <div>
       <div id="payslip-container" className="print-content">
         <main className="m-5 p-5 xl:max-w-4xl xl:mx-auto rounded shadow-xl">
-          <HeaderPreview
-            companyName={companyName}
-            email={email}
-            image={image}
-            setImage={setImage}
-            selectCity={selectCity}
-            selectState={selectState}
-            imagePreview={imagePreview}
-          />
+          <HeaderPreview />
 
-          <MonthHeader headerTitle={headerTitle} payMonth={payMonth} />
+          <MonthHeader />
 
           {/* Employee and paylsip details started */}
           <section
@@ -181,57 +148,20 @@ function Preview({
                 : ""
             }`}
           >
-            <EmployeePreveiw
-              empDetailTitle={empDetailTitle}
-              empDetailsAmount={empDetailsAmount}
-              employeeList={employeeList}
-              setEmployeeList={setEmployeeList}
-            />
-            <PayslipPreview
-              payslipTitle={payslipTitle}
-              payslipDate={payslipDate}
-              payslipList={payslipList}
-              setpayslipList={setpayslipList}
-            />
+            <EmployeePreveiw />
+            <PayslipPreview />
           </section>
 
-          {/* Employee and payslip details ended */}
-
-          {/* Earning and deduction details started */}
           <section className="flex flex-row  h-auto border-black border-2 rounded payslip-color-2">
-            <EarningDetailsPreview
-              earningHeaderTitle={earningHeaderTitle}
-              earningHeaderAmount={earningHeaderAmount}
-              earningTitle={earningTitle}
-              earningAmount={earningAmount}
-              earningList={earningList}
-            />
+            <EarningDetailsPreview />
 
-            <DeductionDetailsPreview
-              deductionHeaderTitle={deductionHeaderTitle}
-              deductionHeaderAmount={deductionHeaderAmount}
-              deductionTitle={deductionTitle}
-              deductionAmount={deductionAmount}
-              deductionList={deductionList}
-            />
+            <DeductionDetailsPreview />
           </section>
+          <SubTotalPreview />
 
-          {/* Earning and deduction details ended */}
-
-          <SubTotalPreview
-            subTotal={subTotal}
-            setSubTotal={setSubTotal}
-            netPayTitle={netPayTitle}
-            totalEarningAmount={totalEarningAmount}
-            totalDeductionAmount={totalDeductionAmount}
-          />
-
-          {note.trim() ? <NotePreview note={note} setNote={setNote} /> : null}
+          {note.trim() ? <NotePreview /> : null}
           <ButtonsPreview
             handleSubmitMain2={handleSubmitMain2}
-            headerTitle={headerTitle}
-            user={user}
-            setIsLoginModalOpen={setIsLoginModalOpen}
             downloadWebpage2={downloadWebpage2}
           />
         </main>

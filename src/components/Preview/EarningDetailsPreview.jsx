@@ -1,15 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { SalaryContext } from '../../contexts/SalaryContext'
 
-function EarningDetailsPreview({
-  earningHeaderTitle,
-  earningHeaderAmount,
-  earningTitle,
-  earningAmount,
-  earningList
-
-
-}) {
+function EarningDetailsPreview() {
+  const { earningHeaderTitle,earningHeaderAmount,earningTitle,earningAmount,earningList}= useContext(SalaryContext)
+  
   return (
     <>
     <div className='left-row w-1/2'>

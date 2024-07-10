@@ -4,21 +4,7 @@ import EmployeeDetails from './EmployeeDetails'
 import { memo } from 'react'
 
 
-function PEDetails({
-  payslipTitle,
-  setPayslipTitle,
-  payslipDate,
-  setPayslipDate,
-  payslipList,
-  setpayslipList,
-  employeeList,
-  setEmployeeList,
-  empDetailTitle,
-  setEmpDetailTitle,
-  empDetailsAmount,
-  setEmpDetailsAmount
-
-}){
+function PEDetails(){
   return (
     <>
     <div className='w-full mt-5 main_text'>
@@ -28,14 +14,7 @@ Payslip & Employee Details
 <div className="grid lg:grid-cols-2 gap-4 p-4 md:grid-cols-1 bg_1 ">
       <div className="col-span-1 border bg_4 border-class rounded">
         
-      <PayslipDetails 
-      payslipTitle={payslipTitle} 
-      setPayslipTitle={setPayslipTitle} 
-      payslipDate={payslipDate} 
-      setPayslipDate={setPayslipDate}
-      payslipList={payslipList} 
-      setpayslipList={setpayslipList}
-     />
+      <PayslipDetails/>
       </div>
       <div className="col-span-1 border border-class rounded">
       
@@ -43,14 +22,7 @@ Payslip & Employee Details
       <div className='h-12'>
             <h2 className='font-bold text-xl ml-2'>Employee Details </h2>
         </div>
-      <EmployeeDetails  
-      employeeList={employeeList} 
-      setEmployeeList={setEmployeeList} 
-      empDetailTitle={empDetailTitle} 
-      setEmpDetailTitle={setEmpDetailTitle} 
-      empDetailsAmount={empDetailsAmount} 
-      setEmpDetailsAmount={setEmpDetailsAmount}
-      />
+      <EmployeeDetails/>
       </div>
       </div>
     </div>

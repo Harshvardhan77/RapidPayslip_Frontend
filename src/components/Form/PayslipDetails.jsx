@@ -2,20 +2,12 @@
   import { v4 as uuidv4 } from 'uuid';
   import {AiOutlineDelete} from 'react-icons/ai'
   import { memo } from 'react';
-  
+  import { useContext } from 'react';
+  import { EmployeeContext } from '../../contexts/EmployeeContext';
 
  
-  function PayslipDetails({ 
-    payslipTitle,
-    setPayslipTitle,
-    payslipDate,
-    setPayslipDate,
-    payslipList,
-    setpayslipList,
-    
-  
-
-  }) {
+  function PayslipDetails() {
+   const { payslipTitle,setPayslipTitle,payslipDate,setPayslipDate,payslipList,setpayslipList}= useContext(EmployeeContext)
 
     // HandleSubmit
     const[errors,setErrors]=useState({})

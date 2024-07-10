@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { SalaryContext } from '../../contexts/SalaryContext'
 
-function SubTotalPreview({subTotal,netPayTitle}) {
+function SubTotalPreview() {
+  const {subTotal,netPayTitle}= useContext(SalaryContext)
   
-  
-
   return (
     <>
     <section className='flex justify-end'>

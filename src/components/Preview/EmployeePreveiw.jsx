@@ -1,11 +1,11 @@
 import React from 'react'
+import { useContext } from 'react'
 import { memo } from 'react'
+import { EmployeeContext } from '../../contexts/EmployeeContext'
 
-function EmployeePreveiw({
-  empDetailTitle,
-  empDetailsAmount,
-  employeeList
-}) {
+function EmployeePreveiw() {
+  const {empDetailTitle,empDetailsAmount,employeeList}= useContext(EmployeeContext)
+
   return (
     <>
         <section className='w-1/2'>

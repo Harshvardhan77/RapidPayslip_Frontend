@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { memo } from 'react'
+import { EmployeeContext } from '../../contexts/EmployeeContext'
 
-function PayslipPreview({
-  payslipTitle,
-  payslipDate,
-  payslipList,
-    setpayslipList
-}) {
+function PayslipPreview() {
+  const {payslipTitle,payslipDate,payslipList,setpayslipList} = useContext(EmployeeContext)
+  
   return (
     <>
         <section className='w-1/2 mr-1'>

@@ -1,20 +1,13 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import {AiOutlineDelete} from "react-icons/ai";
 import { useState } from 'react';
 import { memo } from 'react';
+import { EmployeeContext } from '../../contexts/EmployeeContext';
 
 
-
-function EmployeeDetails({ 
-  employeeList,
-  setEmployeeList,
-  empDetailTitle,
-  setEmpDetailTitle,
-  empDetailsAmount,
-  setEmpDetailsAmount,
- }) {
-
+function EmployeeDetails() {
+  const { employeeList,setEmployeeList,empDetailTitle,setEmpDetailTitle,empDetailsAmount,setEmpDetailsAmount}= useContext(EmployeeContext)
 
   const[errors,setErrors]=useState({})
    

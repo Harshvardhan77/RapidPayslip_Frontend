@@ -1,23 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useState } from "react";
 import { memo } from "react";
+import { SalaryContext } from "../../contexts/SalaryContext";
 
-function SalaryDetailsDeductions({
-  deductionTitle,
-  setDeductionTitle,
-  setDeductionAmount,
-  deductionAmount,
-  setDeductionHeaderTitle,
-  deductionList,
-  deductionHeaderTitle,
-  setDeductionList,
-  setDeductionHeaderAmount,
-  totalDeductionAmount,
-  setTotalDeductionAmount,
-  setTotalDeductionTitle,
-}) {
+function SalaryDetailsDeductions() {
+  const {deductionTitle,setDeductionTitle,setDeductionAmount,deductionAmount,setDeductionHeaderTitle,deductionList,deductionHeaderTitle,
+    setDeductionList,setDeductionHeaderAmount,totalDeductionAmount,setTotalDeductionAmount,setTotalDeductionTitle,}= useContext(SalaryContext)
+    
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {

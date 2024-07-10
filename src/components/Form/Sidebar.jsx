@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { HeaderContext } from "../../contexts/HeaderContext";
 
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
+  const {user}= useContext(HeaderContext)
   const [payslipsUrls, setPayslipUrls] = useState([]);
 
   // Fetching previous Payslips
@@ -12,7 +14,7 @@ const Sidebar = ({ user }) => {
       try {
         const response = await axios.get(`https://rapidpayslipbackend-production.up.railway.app/api/v1/users/payslips/${user._id}`);
         console.log(response.data.data);
-        setPayslipUrls(response.data.data.map(url => url.replace('http://', 'https://')));
+        setPayslipUrls(response.data.data);
       } catch (error) {
         console.log("Error while fetching the payslip Url", error);
       }

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { memo } from "react";
+import { HeaderContext } from "../../contexts/HeaderContext";
 
-function ButtonsPreview({ handleSubmitMain2, headerTitle,user,setIsLoginModalOpen }) {
+function ButtonsPreview({ handleSubmitMain2 }) {
+  const { headerTitle,user,setIsLoginModalOpen}= useContext(HeaderContext)
+
   const navigate = useNavigate();
   const handlePrint = () => {
     if(Object.keys(user).length<=0){
